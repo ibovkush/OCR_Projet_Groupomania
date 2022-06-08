@@ -1,6 +1,28 @@
 <script>
 export default {
     name: "modifier",
+    data: function(){
+        return {
+         api: import.meta.env.VITE_API,
+         token: JSON.parse(localStorage.getItem('headers')).token,
+         userId: JSON.parse(localStorage.getItem('headers')).userId,
+        }
+    },
+    methods:{
+        isModify: function(id_post){
+             fetch(`${this.api}/api/post/:${id_post}`,{
+                 method: 'PUT',
+                 headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                 },
+                 body: JSON.stringify({
+                    message: content
+                })
+             })
+            .then(response => response.json())
+        }
+    }
     
 }
 </script>
@@ -8,7 +30,7 @@ export default {
      <div class="d-flex gap-1">
      
      
-     <button type="button" class="btn btn-danger  ms-auto">Modifier</button>
+     <button type="button"  @click="isModify" class="btn btn-danger  ms-auto">Modifier</button>
     </div>
 </template>
 <style>

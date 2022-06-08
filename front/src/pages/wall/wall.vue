@@ -13,10 +13,30 @@ export default {
     postgm,
     Navbar
     
-}
+},
+ data: function(){
+        return{
+        api: import.meta.env.VITE_API,
+        post: [],
+        error:'',
+        succes:''
+        }
+    },
+    methods:{
+      showPosts: function(){
+        fetch(`${this.api}/api/post` , {
+          methods: 'Get',
+          headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+      }
+    }
 }
 </script>
 <template>
+
 
 
 <Navbar></Navbar>

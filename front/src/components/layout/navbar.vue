@@ -1,7 +1,17 @@
 <script>
   export default {
     name: "Navbar",
-
+    data: function(){
+      return {
+         userId: JSON.parse(localStorage.getItem('headers')).userId
+      }
+    },
+    methods:{
+      isDisconnect: function(){
+        localStorage.removeItem('headers', JSON.stringify)
+        this.$router.push('/login')
+      }
+    }
   }
 </script>
 <template>
@@ -18,7 +28,7 @@
             </svg>
           </a>
           
-          <a href="/login" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+          <a href="#" @click="isDisconnect" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-power"
               viewBox="0 0 16 16">
               <path d="M7.5 1v7h1V1h-1z" />

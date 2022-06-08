@@ -13,26 +13,7 @@ export default {
      dislake,
     },
 
-    data() {
-        return {
-            posts: []
-        }
-    },
-    methods: {
-      loadPost(){
-        fetch('http://localhost:4200/api/post')
-        method: 'GET',
-        then(res => this.posts = res.data.post)
-        .catch(error => this.posts = [error,{ title: "Erreur"}])
-      },
-
-      getPost () {
-        alert('')
-      },
-      mounted: function () {
-            this.loadPost()
-    },
-    },
+    
 }
 </script>
 <template>
@@ -49,6 +30,7 @@ export default {
          <div  class="mb-2 mt-3 d-flex gap-2">
          <modifier></modifier>
           <supprimer></supprimer>
+          
           </div>
           <div  class="mb-2 mt-3 d-flex gap-4">  
           <like></like>

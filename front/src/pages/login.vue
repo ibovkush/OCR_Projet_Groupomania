@@ -42,7 +42,7 @@
                   userId: data.userId,
                   isAdmin: data.isAdmin //status d'administrateur, faulse par default
                 }))
-                // this.$router.push('/wall')
+                 this.$router.push('/wall')
               }
             })
             .catch(err => this.error = err)
