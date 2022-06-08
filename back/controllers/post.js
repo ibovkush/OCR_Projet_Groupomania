@@ -11,11 +11,13 @@ exports.get = (req, res, next) => {
     }));
 };
 exports.save = (req, res, next) => {
-  const postObject = JSON.parse(req.body.post);
-  delete postObject._id;
+
+  let image = req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : '';
+
   const post = new Post({
-    ...postObject,
-    
+    post: req.body.post,
+    userId: req.body.userId,
+    image,
     like: 0,
     dislike: 0
   });
@@ -39,7 +41,7 @@ exports.getOne = (req, res, next) => {
 exports.modifyPost = (req, res, next) => {
   const postObject = req.file ? {
     ...JSON.parse(req.body.post),
-    
+  imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
   } : {
     ...req.body
   };
