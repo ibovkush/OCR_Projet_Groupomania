@@ -53,7 +53,7 @@ export default {
         <div class=" mb-5 btn">
            <input type="file" @change="setPicture($event)" class="form-control">
          </div>
-     <button type="button" class="btn btn-danger mt-2" @click="addPost">Poster</button>
+     <button type="button" class="btn btn-danger mt-2 d-flex-start" @click="addPost">Poster</button>
      </div> 
     
       

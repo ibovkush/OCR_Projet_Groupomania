@@ -22,7 +22,7 @@ export default {
     
   <h5 class="mb-2"><strong>John Doe</strong></h5>
   <div class="card-body container">
-    
+    <img src="" alt="..." class="w-100" />
     <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
     <p class="card-text"><small class="text-muted">18:30</small></p>
     <div>
