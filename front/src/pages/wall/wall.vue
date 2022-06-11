@@ -17,7 +17,12 @@ export default {
  data: function(){
         return{
         api: import.meta.env.VITE_API,
+        userId: JSON.parse(localStorage.getItem('headers')).userId,
+        postId: JSON.parse(localStorage.getItem('headers')).userId,
+        token: JSON.parse(localStorage.getItem('headers')).token,
         post: [],
+        image: '',
+        message: '',
         error:'',
         succes:''
         }
@@ -27,9 +32,21 @@ export default {
         fetch(`${this.api}/api/post` , {
           methods: 'Get',
           headers:{
+            'authorization': this.token,
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           }
+          .then(response => response.json())
+            .then(posts => {
+                this.posts = posts;
+                posts.forEach((item, key) => {
+                    this.updateStatus[key] = false
+                    this.updatePostContent[key] = item.text_content
+                    this.updatePostContent[key] = item.image_content
+                })
+                
+            })
+            .catch(error => console.log(error))
         })
       }
     }
