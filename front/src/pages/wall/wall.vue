@@ -1,111 +1,86 @@
 <script>
-import Cardgm from "../../components/ui/card/Cardgm.vue"
-import postgm from "./postgm.vue"
-import Navbar from "../../components/layout/navbar.vue"
+  import Cardgm from "../../components/ui/card/Cardgm.vue"
+  import postgm from "./postgm.vue"
+  import Navbar from "../../components/layout/navbar.vue"
 
-
-
-
-export default {
+  export default {
     name: "wall",
     components: {
-    Cardgm,
-    postgm,
-    Navbar
-    
-},
- data: function(){
-        return{
+      Cardgm,
+      postgm,
+      Navbar
+
+    },
+    data: function () {
+      return {
         api: import.meta.env.VITE_API,
         userId: JSON.parse(localStorage.getItem('headers')).userId,
-        postId: JSON.parse(localStorage.getItem('headers')).userId,
+        postId: JSON.parse(localStorage.getItem('headers')).postId,
         token: JSON.parse(localStorage.getItem('headers')).token,
-        post: [],
-        image: '',
-        message: '',
-        error:'',
-        succes:''
-        }
-    },
-    methods:{
-      showPosts: function(){
-        fetch(`${this.api}/api/post` , {
-          methods: 'Get',
-          headers:{
-            'authorization': this.token,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          }
-          .then(response => response.json())
-            .then(posts => {
-                this.posts = posts;
-                posts.forEach((item, key) => {
-                    this.updateStatus[key] = false
-                    this.updatePostContent[key] = item.text_content
-                    this.updatePostContent[key] = item.image_content
-                })
-                
-            })
-            .catch(error => console.log(error))
-        })
+        allPosts: [],
       }
+    },
+    methods: {
+      showAllPosts: function () {
+        fetch(`${this.api}/api/post/`, {
+            methods: 'GET',
+            headers: {
+              'authorization': this.token,
+              'Content-Type': 'application/json'
+            }
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data)
+            this.allPosts = data
+          })
+          .catch(error => {
+            console.log(error);
+          })
+      }
+    },
+    created: function () {
+      this.showAllPosts()
     }
-}
+  }
 </script>
 <template>
 
 
 
-<Navbar></Navbar>
-<div class="form-floating container-md">
-  <postgm></postgm>
-  
-</div>
-<hr class="dropdown-divider mt-5" />
-  <Cardgm></Cardgm>
+  <Navbar></Navbar>
+  <div class="form-floating container-md">
+    <postgm :refresh="showAllPosts" />
 
-</template>  
+  </div>
+  <hr class="dropdown-divider mt-5" />
+  <Cardgm v-for="post in allPosts" :key="post._id" :postData="post" :refresh="showAllPosts" />
 
-
-
-
-
-        
+</template>
 
 <style>
-body{
-background-color: rgb(228, 228, 222);
-height: 100%;
-align-items: center;
-padding-bottom: 40px;
-background-color: E7D3C1;
-}
-
-    
-
-.btn-style {
-  background-color: #D1515A;
-  border-color: #D1515A;
-  margin-left: 2px;
-  margin-right: 2px;
-  
-  
-}
-
-    
+  body {
+    background-color: rgb(228, 228, 222);
+    height: 100%;
+    align-items: center;
+    padding-bottom: 40px;
+    background-color: E7D3C1;
+  }
 
 
- 
-  
+
+  .btn-style {
+    background-color: #D1515A;
+    border-color: #D1515A;
+    margin-left: 2px;
+    margin-right: 2px;
+
+
+  }
 
   .headeur-style {
     background-color: #091F43;
   }
-
-  
-
-    
-  
 
   .form-signin {
     width: 100%;
@@ -121,8 +96,6 @@ background-color: E7D3C1;
   .form-signin .form-floating:focus-within {
     z-index: 2;
   }
-
-
 
   .bd-placeholder-img {
     font-size: 1.125rem;

@@ -6,6 +6,8 @@ export default {
          api: import.meta.env.VITE_API,
          token: JSON.parse(localStorage.getItem('headers')).token,
          userId: JSON.parse(localStorage.getItem('headers')).userId,
+         postId: JSON.parse(localStorage.getItem('headers')).postId,
+         isAdmin: JSON.parse(localStorage.getItem('headers')).isAdmin
         }
     },
     methods:{
@@ -27,7 +29,7 @@ export default {
 }
 </script>
 <template>
-     <div class="d-flex gap-1">
+     <div class="d-flex gap-1" v-if="postId && userId == this.userId || isAdmin">
      
      
      <button type="button"  @click="isModify" class="btn btn-danger  ms-auto">Modifier</button>

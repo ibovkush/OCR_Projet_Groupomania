@@ -44,3 +44,14 @@ exports.login = (req, res, next) => {
     })
     .catch(error => res.status(500).json({ error }));
 };
+
+exports.getOneUser = (req, res, next) => {
+  User.findOne({ _id: req.params.id })
+  .then(user => {
+    if (!user) {
+      return res.status(401).json({ error: 'Utilisateur non trouvé !' });
+    } else {
+      return res.status(200).json(user)
+    }
+  })
+}

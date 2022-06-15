@@ -41,7 +41,7 @@ exports.getOne = (req, res, next) => {
 exports.modifyPost = (req, res, next) => {
   const postObject = req.file ? {
     ...JSON.parse(req.body.post),
-  imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
   } : {
     ...req.body
   };
@@ -59,22 +59,29 @@ exports.modifyPost = (req, res, next) => {
     }));
 };
 exports.deletePost = (req, res, next) => {
+
   Post.findOne({
-      _id: req.params.id
-    })
-    .then(post => {
-      const filename = post.imageUrl.split('/images/')[1];
-      fs.unlink(`images/${filename}`, () => {
-        Post.deleteOne({
-            _id: req.params.id
-          })
-          .then(() => res.status(200).json({
-            message: 'Post supprimé !'
-          }))
-          .catch(error => res.status(400).json({
-            error
-          }));
-      });
+    _id: req.params.id
+  })
+  .then(post => {
+      if (post.image != '') {
+        console.log(post.image.split('/images/')[1])
+        fs.unlink(`images/${post.image.split('/images/')[1]}`, (err) => {
+          if (err) throw err;
+          console.log('Image supprimé avec succès');
+        });
+      }
+
+      Post.deleteOne({
+        _id: req.params.id
+      })
+      .then(() => res.status(200).json({
+        message: 'Post supprimé !'
+      }))
+      .catch(error => res.status(400).json({
+        error
+      }));
+
     })
     .catch(error => res.status(500).json({
       error
