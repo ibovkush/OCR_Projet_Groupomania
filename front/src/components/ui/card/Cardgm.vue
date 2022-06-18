@@ -1,13 +1,13 @@
 <script>
-  import like from "../../../components/like.vue"
-  import dislake from "../../../components/dislike.vue"
+  // import like from "../../../components/like.vue"
+  // import dislake from "../../../components/dislike.vue"
+  
 
   export default {
     name: "Cardgm",
     props: ['postData', 'refresh'],
     components: {
-      like,
-      dislake,
+    
     },
     data() {
       return {
@@ -52,17 +52,26 @@
           .catch(error => console.log(error))
         }
       },
-      // modifyOnePost: function() {
-      //  if(confirm("Voulez-vous vraiment modifier votre post?")){
-      //   fetch(`${this.api}/api/post/${this.postData._id}`, {
-      //       method: 'PUT',
-      //       headers: {
-      //         'authorization': this.token,
-      //         'Content-Type': 'application/json'
-      //       },
-      //     })
-      //  }
-      // }
+      modifyOnePost: function() {
+       if(confirm("Voulez-vous vraiment modifier votre post?")){
+        fetch(`${this.api}/api/post/${this.postData._id}`, {
+            method: 'PUT',
+            headers: {
+              'authorization': this.token,
+              'Content-Type': 'application/json'
+            },
+          })
+          .then(response => response.json())
+          .then(data => {
+            if(data.error) {
+              console.log(error)
+            } else {
+              this.refresh()
+            }
+          })
+          .catch(error => console.log(error))
+       }
+      }
       
     },
     created: function () {
@@ -81,16 +90,27 @@
         <div class="d-flex justify-content-between">
           <div class="mb-2 mt-3 d-flex gap-2">
             <div class="d-flex gap-1">
-              <button type="button" class="btn btn-danger  ms-auto">Modifier</button>
+              <button type="button" class="btn btn-danger  ms-auto" @click=" modifyOnePost()">Modifier</button>
             </div>
             <div class="d-flex gap-1">
-              <button type="button" class="btn btn-danger ms-auto"  @click="deleteOnePost()">Supprimer</button>
+              <button type="button" class="btn btn-danger ms-auto"   @click="deleteOnePost()">Supprimer</button>
             </div>
           </div>
-          <!-- <div class="mb-2 mt-3 d-flex gap-4">
-            <like></like>
-            <dislake></dislake>
-          </div> -->
+          <div class="d-flex " >
+            <div class=" gap-1">
+              <button type="button" class="btn-like ms-auto">
+                j'aime
+              </button>
+            </div>
+            <div class=" gap-1 ms-4">
+              <i class="bi bi-suit-heart"></i>
+              <button type="button" class="btn-like ms-auto ">
+               j'aime pas
+              </button>
+            </div>
+          </div>
+            
+         
         </div>
       </div>
     </div>
@@ -98,8 +118,13 @@
 </template>
 
 <style>
-  .avatar-style {
-    width: 65px;
-    margin-top: 10px;
-  }
+  
+  .btn-like {
+ color: white;
+ background-color: #091F43;
+ border-color: #091F43;
+ margin-left: 2px;
+ margin-right: 2px;
+ border-radius: 50px;
+}
 </style>

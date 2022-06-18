@@ -21,11 +21,11 @@ export default {
 </template>
 <style>
 .btn-like {
-        color: white;
-        background-color: #091F43;
-        border-color: #091F43;
-        margin-left: 2px;
-        margin-right: 2px;
-        border-radius: 50px;
-    }
+ color: white;
+ background-color: #091F43;
+ border-color: #091F43;
+ margin-left: 2px;
+ margin-right: 2px;
+ border-radius: 50px;
+}
 </style>

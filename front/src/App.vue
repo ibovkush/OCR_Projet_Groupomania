@@ -1,4 +1,5 @@
 <script>
+
 import signupVue from "./pages/signup.vue";
 import Navbar from "./components/layout/navbar.vue";
 

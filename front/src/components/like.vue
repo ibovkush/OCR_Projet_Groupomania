@@ -17,6 +17,7 @@ export default {
     //             methode:'POST',
     //         headers:{
     //               'authorization': this.token,
+    //               'Content-Type': 'application/json'
     //             },
     //         }
     //         )
